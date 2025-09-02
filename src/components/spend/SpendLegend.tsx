@@ -22,33 +22,54 @@ export default function SpendLegend({ visiblePoints }: Props) {
   const sizeExamples = [200, 800, 2000];
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-sm">
-      <div className="flex items-center gap-4">
-        <div className="flex items-end gap-3">
-          {sizeExamples.map((s) => (
-            <div key={s} className="flex flex-col items-center">
-              <div
-                className="rounded-full border border-[#7159B6] bg-[#7159B6]/10"
-                style={{ width: radiusFromSpend(s) * 2, height: radiusFromSpend(s) * 2 }}
-              />
-              <span className="mt-1 text-[11px] text-gray-600">£{s}</span>
+    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+      <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6">
+        {/* Size Legend */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 mb-2">Bubble Size</h3>
+            <div className="flex items-end gap-4">
+              {sizeExamples.map((s) => (
+                <div key={s} className="flex flex-col items-center gap-1">
+                  <div
+                    className="rounded-full border-2 border-violet-600/30 bg-violet-600/10"
+                    style={{ width: radiusFromSpend(s) * 2, height: radiusFromSpend(s) * 2 }}
+                  />
+                  <span className="text-xs font-medium text-gray-600">£{s.toLocaleString()}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <span className="text-gray-700">Bubble size scales with spend</span>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-3">
-        {Object.entries(CAT).map(([name, color]) => (
-          <div key={name} className="flex items-center gap-1.5">
-            <span className="inline-block w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-            <span className="text-gray-800">{name}</span>
           </div>
-        ))}
-      </div>
+          <div className="text-sm text-gray-600 font-medium">
+            Size scales with spend amount
+          </div>
+        </div>
 
-      <div className="font-medium text-gray-900">
-        Total shown: £{Math.round(totalSpend).toLocaleString("en-GB")} • {count} transactions
+        {/* Category Colors */}
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Categories</h3>
+          <div className="flex flex-wrap items-center gap-3">
+            {Object.entries(CAT).map(([name, color]) => (
+              <div key={name} className="flex items-center gap-2">
+                <div 
+                  className="w-3 h-3 rounded-full shadow-sm" 
+                  style={{ backgroundColor: color }} 
+                />
+                <span className="text-sm font-medium text-gray-700">{name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Summary Stats */}
+        <div className="xl:text-right">
+          <div className="text-2xl font-bold text-gray-900">
+            £{Math.round(totalSpend).toLocaleString("en-GB")}
+          </div>
+          <div className="text-sm text-gray-600 font-medium">
+            {count.toLocaleString()} transactions shown
+          </div>
+        </div>
       </div>
     </div>
   );

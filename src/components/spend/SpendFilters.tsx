@@ -63,55 +63,61 @@ export default function SpendFilters({ value, onChange }: Props) {
   const allSelected = useMemo(() => state.selectedCategories.size === CATEGORIES.length, [state.selectedCategories]);
 
   return (
-    <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm font-medium mr-1">Categories:</span>
-        {CATEGORIES.map((cat) => {
-          const active = state.selectedCategories.has(cat);
-          return (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => toggleCategory(cat)}
-              aria-pressed={active}
-              className={`rounded-full px-3 py-1 text-sm ring-1 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-                active
-                  ? "bg-violet-600 text-white ring-violet-600 hover:bg-violet-700"
-                  : "bg-white text-gray-800 ring-gray-300 hover:bg-gray-50"
-              }`}
-            >
-              {cat}
-            </button>
-          );
-        })}
-        <button
-          type="button"
-          onClick={() => setState({ ...state, selectedCategories: new Set(CATEGORIES) })}
-          className="ml-1 text-sm underline-offset-2 hover:underline"
-        >
-          {allSelected ? "All" : "Select all"}
-        </button>
-      </div>
+    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+      <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+        <div className="flex-1">
+          <h3 className="text-sm font-semibold text-gray-900 mb-3">Filter by Category</h3>
+          <div className="flex flex-wrap items-center gap-2.5">
+            {CATEGORIES.map((cat) => {
+              const active = state.selectedCategories.has(cat);
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => toggleCategory(cat)}
+                  aria-pressed={active}
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 ${
+                    active
+                      ? "bg-violet-600 text-white shadow-md hover:bg-violet-700 hover:shadow-lg transform hover:scale-105"
+                      : "bg-gray-50 text-gray-700 border border-gray-200 hover:bg-gray-100 hover:border-gray-300"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            onClick={() => setState({ ...state, selectedCategories: new Set(CATEGORIES) })}
+            className="mt-3 text-sm font-medium text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline transition-colors"
+          >
+            {allSelected ? "All selected" : "Select all"}
+          </button>
+        </div>
 
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium mr-1">Date:</span>
-        <div className="inline-flex rounded-full bg-gray-100 p-1">
-          {DATE_PRESETS.map((p) => {
-            const active = state.range === p.key;
-            return (
-              <button
-                key={p.key}
-                type="button"
-                onClick={() => setRange(p.key)}
-                aria-pressed={active}
-                className={`px-3 py-1 text-sm rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition ${
-                  active ? "bg-white shadow text-gray-900" : "text-gray-700 hover:text-gray-900"
-                }`}
-              >
-                {p.label}
-              </button>
-            );
-          })}
+        <div className="lg:border-l lg:border-gray-200 lg:pl-6">
+          <h3 className="text-sm font-semibold text-gray-900 mb-3">Time Period</h3>
+          <div className="inline-flex rounded-xl bg-gray-100 p-1 shadow-inner">
+            {DATE_PRESETS.map((p) => {
+              const active = state.range === p.key;
+              return (
+                <button
+                  key={p.key}
+                  type="button"
+                  onClick={() => setRange(p.key)}
+                  aria-pressed={active}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 ${
+                    active 
+                      ? "bg-white shadow-md text-gray-900 transform scale-105" 
+                      : "text-gray-600 hover:text-gray-900 hover:bg-white/50"
+                  }`}
+                >
+                  {p.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

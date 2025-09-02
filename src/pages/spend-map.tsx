@@ -32,13 +32,33 @@ export default function SpendMapPage() {
   const [focusedId, setFocusedId] = useState<string | undefined>(undefined);
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-6 space-y-6">
-      <h1 className="text-2xl font-semibold">Spend Map (UK)</h1>
-      <SpendFilters value={filters} onChange={setFilters} />
-      <SpendMapInner points={visible} focusedId={focusedId} />
-      <SpendLegend visiblePoints={visible} />
-      <SpendTable points={visible} onFocus={setFocusedId} />
-    </main>
+    <div className="min-h-screen bg-gray-50">
+      <main className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            UK Spend Map
+          </h1>
+          <p className="text-lg text-gray-600 font-medium">
+            Visualize spending patterns across the United Kingdom
+          </p>
+        </div>
+
+        {/* Filters */}
+        <SpendFilters value={filters} onChange={setFilters} />
+
+        {/* Map */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-2 shadow-sm">
+          <SpendMapInner points={visible} focusedId={focusedId} />
+        </div>
+
+        {/* Legend */}
+        <SpendLegend visiblePoints={visible} />
+
+        {/* Table */}
+        <SpendTable points={visible} onFocus={setFocusedId} />
+      </main>
+    </div>
   );
 }
 
